@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration</title>
+    <!-- Подключение Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa; /* Светлый фон */
+        }
+        .registration-container {
+            margin-top: 50px;
+            max-width: 500px;
+            padding: 30px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .registration-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .registration-header h2 {
+            font-weight: bold;
+            color: #4CAF50;
+        }
+        .btn-register {
+            background-color: #4CAF50;
+            color: #ffffff;
+        }
+        .btn-register:hover {
+            background-color: #45a049;
+        }
+        .form-label {
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+<div class="container d-flex justify-content-center">
+    <div class="registration-container">
+        <!-- Заголовок формы -->
+        <div class="registration-header">
+            <h2>Register</h2>
+        </div>
+
+        <!-- Форма регистрации -->
+        <form action="/registration" method="post" enctype="multipart/form-data">
+            <div class="mb-3">
+                <label for="username" class="form-label">Username</label>
+                <input type="text" id="username" name="username" class="form-control" placeholder="Enter username" required>
+                <div th:if="${usernameError}" class="text-danger mt-1" th:text="${usernameError}"></div>
+            </div>
+
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" id="password" name="password" class="form-control" placeholder="Enter password" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="passwordConfirm" class="form-label">Confirm Password</label>
+                <input type="password" id="passwordConfirm" name="passwordConfirm" class="form-control" placeholder="Confirm password" required>
+                <div th:if="${passwordError}" class="text-danger mt-1" th:text="${passwordError}"></div>
+            </div>
+
+            <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" id="email" name="email" class="form-control" placeholder="Enter email">
+            </div>
+
+            <div class="mb-3">
+                <label for="profilePicture" class="form-label">Profile Picture</label>
+                <input type="file" id="profilePicture" name="profilePicture" class="form-control" accept="image/*">
+            </div>
+
+            <!-- Сообщение об ошибке загрузки -->
+            <div th:if="${uploadError}" class="text-danger mt-1" th:text="${uploadError}"></div>
+
+            <!-- Кнопка регистрации -->
+            <div class="d-grid">
+                <button type="submit" class="btn btn-register">Register</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Подключение Bootstrap JS Bundle -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

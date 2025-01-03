@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Task</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<header>
+    <div class="container d-flex justify-content-between align-items-center">
+        <h1>My Application</h1>
+        <nav class="nav">
+            <ul style="list-style-type: none;">
+                <li><a  href="/profile"> Profile </a></li>
+                <li><a href="/tasks/all"> Tasks </a></li>
+                <li><a href="/sendMail"> Send email </a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+<h2>Create a Task</h2>
+
+<!-- Display Error Messages -->
+<div th:if="${#fields.hasErrors()}" class="error">
+    <p>Please correct the following errors:</p>
+    <ul>
+        <li th:each="err : ${#fields.errors()}" th:text="${err}"></li>
+    </ul>
+</div>
+
+<!-- Task Creation Form -->
+<form th:action="@{/tasks/create}" method="post">
+    <label for="title">Title</label>
+    <input type="text" id="title" name="title" th:field="*{title}" placeholder="Enter task title" required />
+    <div th:if="${#fields.hasErrors('title')}" class="error">
+        <span th:errors="*{title}">Title Error</span>
+    </div>
+
+    <label for="description">Description</label>
+    <textarea id="description" name="description" th:field="*{description}" placeholder="Describe the task"></textarea>
+    <div th:if="${#fields.hasErrors('description')}" class="error">
+        <span th:errors="*{description}">Description Error</span>
+    </div>
+
+    <label for="dueDate">Due Date</label>
+    <input type="date" id="dueDate" name="dueDate" th:field="*{dueDate}" required />
+    <div th:if="${#fields.hasErrors('dueDate')}" class="error">
+        <span th:errors="*{dueDate}">Due Date Error</span>
+    </div>
+
+    <label for="category">Category</label>
+    <select id="category" name="category" th:field="*{category}">
+        <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}"></option>
+    </select>
+    <div th:if="${#fields.hasErrors('category')}" class="error">
+        <span th:errors="*{category}">Category Error</span>
+    </div>
+
+    <button type="submit">Save Task</button>
+</form>
+
+<!-- Link to Task List -->
+<a href="/tasks">Back to Task List</a>
+
+</body>
+</html>

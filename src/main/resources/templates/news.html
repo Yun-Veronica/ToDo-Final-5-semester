@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News</title>
+    <!-- Подключение Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .news-header {
+            text-align: center;
+            margin: 30px 0;
+            color: #4CAF50;
+        }
+        .card {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border: none;
+        }
+        .card-title {
+            color: #4CAF50;
+            font-weight: bold;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            transition: all 0.3s ease;
+        }
+        .btn-back {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .btn-back:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <!-- Заголовок страницы -->
+    <div class="news-header">
+        <h1>Latest News</h1>
+        <p>Stay updated with the latest information</p>
+    </div>
+
+    <!-- Список новостей -->
+    <div class="row">
+        <!-- Пример новости -->
+        <div class="col-md-4 mb-4" th:each="news : ${newsList}">
+            <div class="card h-100">
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title" th:text="${news.title}">News Title</h5>
+                    <p class="card-text flex-grow-1" th:text="${news.content}">
+                        This is a short description of the news content.
+                    </p>
+                    <p class="text-muted" th:text="${news.date}">2024-05-01</p>
+                    <a href="#" class="btn btn-outline-success mt-auto">Read More</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Кнопка возврата на главную -->
+    <div class="text-center mt-4">
+        <a href="/" class="btn btn-back">Back to Home</a>
+    </div>
+</div>
+
+<!-- Подключение Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

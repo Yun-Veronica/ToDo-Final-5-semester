@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Tasks</title>
+    <!-- Подключение Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .tasks-container {
+            margin-top: 30px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+        .tasks-header {
+            text-align: center;
+            color: #4CAF50;
+            margin-bottom: 20px;
+        }
+        .btn-create {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .btn-create:hover {
+            background-color: #45a049;
+        }
+        .table thead {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .table tbody tr:hover {
+            background-color: #f1f1f1;
+        }
+        .btn-action {
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <div class="container d-flex justify-content-between align-items-center">
+        <h1>My Application</h1>
+        <nav class="nav">
+            <ul style="list-style-type: none;">
+                <li><a  href="/profile"> Profile </a></li>
+                <li><a href="/tasks/all"> Tasks </a></li>
+                <li><a href="/sendMail"> Send email </a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+<div class="container mt-4">
+    <!-- Заголовок страницы -->
+    <div class="tasks-header">
+        <h2>My Tasks</h2>
+    </div>
+
+    <!-- Кнопка создания новой задачи -->
+    <div class="mb-3 text-end">
+        <a href="/tasks/create" class="btn btn-create">Create New Task</a>
+    </div>
+
+    <!-- Форма поиска -->
+    <form th:action="@{/tasks/all}" method="get" class="d-flex mb-4">
+        <input type="text" name="search" th:value="${search}" class="form-control me-2" placeholder="Search tasks">
+        <button type="submit" class="btn btn-outline-success">Search</button>
+    </form>
+
+    <!-- Список задач -->
+    <div class="tasks-container">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>Task Name</th>
+                <th>Description</th>
+                <th>Priority</th>
+                <th>Creation Date</th>
+                <th>Due Date</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="task : ${tasks}">
+                <td th:text="${task.name}">Task Name</td>
+                <td th:text="${task.task_text}">Description</td>
+                <td th:text="${task.priority}">Priority</td>
+                <td th:text="${task.creationDate}">Creation Date</td>
+                <td th:text="${task.dueDate}">Due Date</td>
+                <td>
+                    <a th:href="@{/tasks/update/{id}(id=${task.id})}" class="btn btn-sm btn-primary btn-action">Edit</a>
+                    <a th:href="@{/tasks/delete/{id}(id=${task.id})}"
+                       class="btn btn-sm btn-danger btn-action"
+                       onclick="return confirm('Are you sure you want to delete this task?');">Delete</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <!-- Пустой список задач -->
+        <div th:if="${#lists.isEmpty(tasks)}" class="text-center text-muted">
+            <p>No tasks found. Create a new task!</p>
+        </div>
+    </div>
+</div>
+
+<!-- Подключение Bootstrap JS Bundle -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
